@@ -12,16 +12,17 @@ import java.util.List;
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@Column(name = "task_id", nullable = false)
+	@Column(name = "task_id")
 	private Long taskId;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "user_id", nullable = false)
-	@Column(name = "owner")
-	private User owner;
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "manager_id", nullable = false)
+	private Manager manager;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "user_id")
-	@Column(name = "developers")
-	private List<User> developers;
+	@ManyToMany(mappedBy = "tasks",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Developer> developers;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "project_id")
+	private Project project;
 
 }

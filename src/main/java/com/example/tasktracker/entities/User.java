@@ -10,20 +10,19 @@ import java.util.Set;
 
 @Entity
 @Component
-@Scope("session")
 @Data
-public class User {
+public abstract class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
 	private Long id;
 	private String name;
 	private String email;
-//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id")
 	private Role role;
-	//	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//	@JoinColumn(name = "task_id")
-	private Task task;
-	@OneToMany()
+
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	private Set<Comment> comments;
 
 }
