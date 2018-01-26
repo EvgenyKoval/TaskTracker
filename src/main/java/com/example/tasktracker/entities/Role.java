@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Component
+@Scope("prototype")
 @Data
 public class Role {
 	@Id

@@ -1,27 +1,31 @@
 package com.example.tasktracker.entities;
 
 import lombok.Data;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Component
+@Scope("prototype")
 @Data
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "task_id")
 	private Long taskId;
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "manager_id", nullable = false)
-	private Manager manager;
+	@ManyToOne
+	@JoinColumn(name = "manager_id")
+	private User manager;
 
-	@ManyToMany(mappedBy = "tasks",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Developer> developers;
+	@ManyToOne
+	@JoinColumn(name = "developer_id")
+	private User developer;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private Project project;
 
