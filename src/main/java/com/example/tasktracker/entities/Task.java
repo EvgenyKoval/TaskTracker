@@ -19,14 +19,15 @@ public class Task {
 	private Long taskId;
 	@ManyToOne
 	@JoinColumn(name = "manager_id")
-	private User manager;
+	private Manager manager;
 
 	@ManyToOne
 	@JoinColumn(name = "developer_id")
-	private User developer;
+	private Developer developer;
 
 	@ManyToOne
 	@JoinColumn(name = "project_id")
 	private Project project;
+
 
 }

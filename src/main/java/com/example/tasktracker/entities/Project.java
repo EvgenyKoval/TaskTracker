@@ -22,17 +22,31 @@ public class Project {
 	@Column(name = "project_id")
 	private Long projectId;
 
-	private String prijectName;
+	private String projectName;
 
 	@ManyToOne
 	@JoinColumn(name = "manager")
-	private User manager;
+	private Manager manager;
 
+	@ManyToMany(mappedBy = "projects")
+	private List<Developer> developers = new ArrayList<>();
 	@OneToMany
-	private List<User> developers = new ArrayList<>();
+	private List<Task> tasks = new ArrayList<>();
 
-	public void addDeveloper(User dev) {
+	public void addDeveloper(Developer dev) {
 		developers.add(dev);
 	}
 
+	public void addTask(Task task) {
+		tasks.add(task);
+	}
+
+	@Override
+	public String toString() {
+		return "Project{" +
+				"projectId=" + projectId +
+				", projectName='" + projectName + '\'' +
+				", manager=" + manager +
+				'}';
+	}
 }
