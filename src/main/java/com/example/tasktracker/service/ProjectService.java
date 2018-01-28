@@ -1,23 +1,14 @@
 package com.example.tasktracker.service;
 
 import com.example.tasktracker.entities.Project;
-import com.example.tasktracker.entities.User;
 import com.example.tasktracker.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class ProjectService {
 	@Autowired
 	private ProjectRepository repo;
-
-	public List<User> findAllDevelopersByProjectId(Long id) {
-		return repo.findAllDevelopersByProjectId(id);
-	}
 
 	public Project save(Project project) {
 		return repo.save(project);
@@ -62,4 +53,5 @@ public class ProjectService {
 	public void deleteAll() {
 		repo.deleteAll();
 	}
+
 }

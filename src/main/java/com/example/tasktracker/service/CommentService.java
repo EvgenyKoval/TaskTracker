@@ -18,7 +18,7 @@ public class CommentService {
 		return repo.save(iterable);
 	}
 
-	public com.example.tasktracker.entities.Comment findOne(Long id) {
+	public Comment findOne(Long id) {
 		return repo.findOne(id);
 	}
 
