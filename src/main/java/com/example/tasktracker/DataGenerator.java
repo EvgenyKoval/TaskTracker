@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 @Component
 public class DataGenerator {
 
 	private ConfigurableApplicationContext context;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DeveloperService developerService;
+	@Autowired
+	private ManagerService managerService;
 	@Autowired
 	private ProjectService projectService;
 	@Autowired
@@ -25,61 +27,53 @@ public class DataGenerator {
 
 
 	public void generateData() {
-		User manager = context.getBean(User.class);
-		User dev = context.getBean(User.class);
-
-		Role roleMan = context.getBean(Role.class);
-		Role roleDev = context.getBean(Role.class);
-
-		Task task = context.getBean(Task.class);
-		Comment comment = context.getBean(Comment.class);
-		Project project = context.getBean(Project.class);
-
+		Role roleMan = roleService.save(context.getBean(Role.class));
+		Role roleDev = roleService.save(context.getBean(Role.class));
 		roleDev.setRoleName("Dev");
-
 		roleService.save(roleDev);
 		roleMan.setRoleName("manager");
 		roleService.save(roleMan);
+		for (int i = 0; i < 10; i++) {
+			Manager manager = managerService.save(context.getBean(Manager.class));
+			Developer dev = developerService.save(context.getBean(Developer.class));
 
-		manager.setRole(roleMan);
-		dev.setRole(roleDev);
+			Task task = taskService.save(context.getBean(Task.class));
 
-		task.setManager(manager);
-		task.setProject(project);
-		task.setDeveloper(dev);
+			Comment comment = commentService.save(context.getBean(Comment.class));
 
-		comment.setAuthor(manager);
+			Project project = projectService.save(context.getBean(Project.class));
 
-		project.setManager(manager);
-		project.addDeveloper(dev);
-		project.addDeveloper(manager);
+			manager.setRole(roleMan);
+			dev.setRole(roleDev);
 
-		userService.save(manager);
-		userService.save(dev);
-		projectService.save(project);
-		taskService.save(task);
-		commentService.save(comment);
+			task.setManager(manager);
+			task.setDeveloper(dev);
+			task.setProject(project);
 
-		System.out.println(commentService.findOne(1L));
-		System.out.println(roleService.findOne(1L));
-		System.out.println(roleService.findOne(2L));
-//		System.out.println(taskService.findOne(1L));
-		System.out.println(userService.findOne(1L));
-		System.out.println(userService.findOne(2L));
+			comment.setAuthor(manager);
 
-		Project project1 = projectService.findOne(1L);
-//		Set<User> developers = projectService.findAllDevelopersByProjectId(1L);
+			project.setManager(manager);
+			project.addDeveloper(dev);
+			project.addTask(task);
+			manager.addTask(task);
+			manager.addProject(project);
+			manager.addComment(comment);
+			dev.addTask(task);
+			dev.addProject(project);
 
-		System.out.println();
-		System.out.println(project1.getManager());
-		System.out.println(project1.getPrijectName());
-		System.out.println(project1.getProjectId());
-		System.out.println(project1.getDevelopers().get(0));
-//		System.out.println(project1);
-
-
+			developerService.save(dev);
+			managerService.save(manager);
+			commentService.save(comment);
+			projectService.save(project);
+			taskService.save(task);
+		}
+		System.out.println(managerService.findAll());
+		System.out.println(developerService.findAll());
+		System.out.println(commentService.findAll());
+		System.out.println(roleService.findAll());
+		System.out.println(taskService.findAll());
+		System.out.println(projectService.findAll());
 	}
-
 
 	@Autowired
 	public void setContext(ConfigurableApplicationContext context) {
