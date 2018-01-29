@@ -1,30 +1,45 @@
 package com.example.tasktracker.controller;
 
+import com.example.tasktracker.entities.Manager;
 import com.example.tasktracker.service.ManagerService;
-import com.example.tasktracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/")
+import javax.servlet.http.HttpServletResponse;
+
+//@Controller(value = "/users")
 public class ManagerController {
-	@Autowired
-	private UserService userService;
 
-	@Autowired
 	private ManagerService managerService;
 
-	@GetMapping(value = "/users")
+	public ManagerController(ManagerService managerService) {
+		this.managerService = managerService;
+	}
+
+	@GetMapping(value = "/")
 	public @ResponseBody
 	String getAllUsers() {
-		return managerService.findOne(1L).toString();
+		return new Gson().toJson(managerService.findAll());
 	}
 
 	@GetMapping(value = "/user/{id}")
 	public @ResponseBody
 	String getManager(@PathVariable Long id) {
-		return managerService.findOne(id).toString();
+		Manager manager = managerService.findOne(id,true);
+		return new Gson().toJson(manager,Manager.class);
 	}
+
+	@DeleteMapping(value = "/user/{id}")
+	public @ResponseBody boolean deleteManager(@PathVariable Long id) {
+		managerService.delete(id);
+		return true;
+	}
+
+	@PostMapping(value = "/user")
+	public String addManager(@RequestParam("manager") String manager, HttpServletResponse response) {
+		managerService.save(new Gson().fromJson(manager,Manager.class));
+		response.setStatus(200);
+		return new Gson().toJson(true);
+	}
+
 }

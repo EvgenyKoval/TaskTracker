@@ -21,9 +21,9 @@ public class Developer extends User {
 	@JoinTable(name = "developers_projects",
 			joinColumns = @JoinColumn(name = "developer_id"),
 			inverseJoinColumns = @JoinColumn(name = "project_id"))
-	private List<Project> projects = new ArrayList<>();
+	transient private List<Project> projects = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Task> tasks = new ArrayList<>();
+	transient private List<Task> tasks = new ArrayList<>();
 
 	public void addTask(Task task) {
 		tasks.add(task);

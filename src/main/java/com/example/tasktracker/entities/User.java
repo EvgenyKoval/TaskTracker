@@ -1,11 +1,13 @@
 package com.example.tasktracker.entities;
 
 
+import com.google.gson.annotations.Expose;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import java.util.List;
 @Component
 @Scope("prototype")
 @Data
-public abstract class User {
+public abstract class User implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
@@ -24,7 +26,7 @@ public abstract class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	@OneToMany
-	private List<Comment> comments = new ArrayList<>();
+	/*transient*/ private List<Comment> comments = new ArrayList<>();
 
 
 	public void addComment(Comment comment) {
