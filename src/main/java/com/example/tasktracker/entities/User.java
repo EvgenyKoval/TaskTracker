@@ -26,7 +26,7 @@ public abstract class User implements Serializable{
 	@JoinColumn(name = "role_id")
 	private Role role;
 	@OneToMany
-	/*transient*/ private List<Comment> comments = new ArrayList<>();
+	transient private List<Comment> comments = new ArrayList<>();
 
 
 	public void addComment(Comment comment) {

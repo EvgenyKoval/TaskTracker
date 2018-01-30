@@ -2,9 +2,10 @@ package com.example.tasktracker.controller;
 
 import com.example.tasktracker.DataGenerator;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller(value = "/1")
+@Controller
+@RequestMapping(value = "/")
 public class MainController {
 
 	public MainController(DataGenerator dataGenerator) {

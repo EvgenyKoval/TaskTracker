@@ -5,8 +5,6 @@ import com.example.tasktracker.repository.DeveloperRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-
 @Component
 public class DeveloperService {
 
@@ -21,13 +19,9 @@ public class DeveloperService {
 		return repo.save(iterable);
 	}
 
-	@Transactional
-	public Developer findOne(Long aLong, boolean permanently) {
-		Developer dev = repo.findOne(aLong);
-		if (permanently) {
-			dev.getTasks().size();
-		}
-		return dev;
+	public Developer findOne(Long id) {
+
+		return repo.findOne(id);
 	}
 
 	public boolean exists(Long aLong) {

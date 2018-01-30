@@ -31,7 +31,7 @@ public class Project {
 	@ManyToMany(mappedBy = "projects")
 	transient private List<Developer> developers = new ArrayList<>();
 	@OneToMany
-	private List<Task> tasks = new ArrayList<>();
+	transient private List<Task> tasks = new ArrayList<>();
 
 	public void addDeveloper(Developer dev) {
 		developers.add(dev);

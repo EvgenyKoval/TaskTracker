@@ -5,8 +5,6 @@ import com.example.tasktracker.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-
 @Component
 public class ManagerService {
 	@Autowired
@@ -20,15 +18,8 @@ public class ManagerService {
 		return repo.save(iterable);
 	}
 
-	@Transactional
-	public Manager findOne(Long id, boolean permanently) {
-		Manager manager = repo.findOne(id);
-		if (permanently) {
-			manager.getCreatedProjects().size();
-			manager.getCreatedTasks().size();
-			manager.getComments().size();
-		}
-		return manager;
+	public Manager findOne(Long id) {
+		return repo.findOne(id);
 	}
 
 	public boolean exists(Long aLong) {
