@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/comments")
 public class CommentController {
@@ -38,19 +40,23 @@ public class CommentController {
 	}
 
 	@DeleteMapping("/comment/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public void deleteComment(@PathVariable Long id) {
 		commentService.delete(id);
 	}
 
 	@PutMapping("comment/{id}")
-	public void updatecomment(@PathVariable Long id, @RequestParam Comment comment) {
+	@ResponseStatus(HttpStatus.OK)
+	public void updateComment(@PathVariable Long commentId, @RequestParam("commentText") String commentText) {
+		Comment comment = commentService.findOne(commentId);
+		comment.setCommentText(commentText);
+		comment.setDate(new Date());
 		commentService.save(comment);
 	}
 
-	@GetMapping("/")
-	public @ResponseBody
-	Iterable<Comment> getComments() {
-
+	@GetMapping
+	@ResponseBody
+	public Iterable<Comment> getComments() {
 		return commentService.findAll();
 	}
 }
