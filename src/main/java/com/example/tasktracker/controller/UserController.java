@@ -1,9 +1,9 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.entities.Manager;
+import com.example.tasktracker.entities.Comment;
 import com.example.tasktracker.entities.User;
+import com.example.tasktracker.service.CommentService;
 import com.example.tasktracker.service.UserService;
-import com.google.gson.Gson;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
 	private UserService userService;
+	private CommentService commentService;
 
-	public UserController(UserService userService) {
+
+	public UserController(UserService userService, CommentService commentService) {
 		this.userService = userService;
+		this.commentService = commentService;
 	}
 
-	@GetMapping(value = "/")
+	@GetMapping
 	@ResponseBody
 	public Iterable<User> getAllUsers() {
 		return userService.findAll();
@@ -37,10 +40,15 @@ public class UserController {
 		userService.delete(id);
 	}
 
-	@PostMapping(value = "/user")
+	/*@PostMapping(value = "/user")
 	@ResponseStatus(HttpStatus.OK)
 	public void addManager(@RequestParam("user") String manager) {
 		userService.save(new Gson().fromJson(manager, Manager.class));
-	}
+	}*/
 
+	@GetMapping("/user/{id}/comments")
+	@ResponseBody
+	public Iterable<Comment> getUserComments(@PathVariable Long id) {
+		return commentService.getUserComments(id);
+	}
 }
