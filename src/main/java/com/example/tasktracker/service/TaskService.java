@@ -53,4 +53,8 @@ public class TaskService {
 	public void deleteAll() {
 		repo.deleteAll();
 	}
+
+	public Iterable<Task> getProjectTasks(Long projectId) {
+		return repo.findAllByProjectProjectId(projectId);
+	}
 }

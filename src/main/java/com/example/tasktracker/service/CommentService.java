@@ -53,4 +53,8 @@ public class CommentService {
 	public void deleteAll() {
 		repo.deleteAll();
 	}
+
+	public Iterable<Comment> getUserComments(Long id) {
+		return repo.findAllByAuthorId(id);
+	}
 }

@@ -4,4 +4,5 @@ import com.example.tasktracker.entities.Comment;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CommentRepository  extends CrudRepository<Comment,Long> {
+	Iterable<Comment> findAllByAuthorId(Long id);
 }
