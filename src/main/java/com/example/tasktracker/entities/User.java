@@ -1,7 +1,6 @@
 package com.example.tasktracker.entities;
 
 
-import com.google.gson.annotations.Expose;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
