@@ -16,8 +16,7 @@ public class MainController {
 
 
 	@GetMapping(value = "/")
-	@ResponseBody
 	public String index() {
-		return "html/index";
+		return "greeting";
 	}
 }

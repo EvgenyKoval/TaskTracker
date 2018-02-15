@@ -1,5 +1,6 @@
 package com.example.tasktracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.context.annotation.Scope;
@@ -21,9 +22,12 @@ public class Developer extends User {
 	@JoinTable(name = "developers_projects",
 			joinColumns = @JoinColumn(name = "developer_id"),
 			inverseJoinColumns = @JoinColumn(name = "project_id"))
-	transient private List<Project> projects = new ArrayList<>();
+	@JsonIgnore
+	private List<Project> projects = new ArrayList<>();
+
 	@OneToMany(cascade = CascadeType.ALL)
-	transient private List<Task> tasks = new ArrayList<>();
+	@JsonIgnore
+	private List<Task> tasks = new ArrayList<>();
 
 	public void addTask(Task task) {
 		tasks.add(task);

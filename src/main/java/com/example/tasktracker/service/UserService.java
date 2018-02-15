@@ -11,9 +11,7 @@ public class UserService {
 	private UserRepository repo;
 
 	public User findOne(Long id) {
-		User user = repo.findOne(id);
-//		user.getCreatedprojects().iterator();
-		return user;
+		return repo.findOne(id);
 	}
 
 	public Iterable<User> findAll() {

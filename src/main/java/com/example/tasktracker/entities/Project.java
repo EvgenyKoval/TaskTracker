@@ -1,15 +1,14 @@
 package com.example.tasktracker.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Component
@@ -29,9 +28,11 @@ public class Project {
 	private Manager manager;
 
 	@ManyToMany(mappedBy = "projects")
-	transient private List<Developer> developers = new ArrayList<>();
+	@JsonIgnore
+	private List<Developer> developers = new ArrayList<>();
 	@OneToMany
-	transient private List<Task> tasks = new ArrayList<>();
+	@JsonIgnore
+	private List<Task> tasks = new ArrayList<>();
 
 	public void addDeveloper(Developer dev) {
 		developers.add(dev);

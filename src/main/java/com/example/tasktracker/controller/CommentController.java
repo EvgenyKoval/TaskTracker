@@ -5,6 +5,7 @@ import com.example.tasktracker.service.CommentService;
 import com.example.tasktracker.service.UserService;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +15,9 @@ import java.util.Date;
 @RequestMapping("/comments")
 public class CommentController {
 
-	private CommentService commentService;
-	private UserService userService;
-	private ConfigurableApplicationContext context;
+	private final CommentService commentService;
+	private final UserService userService;
+	private final ConfigurableApplicationContext context;
 
 	public CommentController(CommentService commentService, UserService userService, ConfigurableApplicationContext context) {
 		this.commentService = commentService;
@@ -26,8 +27,12 @@ public class CommentController {
 
 	@GetMapping(value = "/comment/{id}")
 	@ResponseBody
-	public Comment getComments(@PathVariable Long id) {
-		return commentService.findOne(id);
+	public ResponseEntity<Comment> getComments(@PathVariable Long id) {
+		Comment comment = commentService.findOne(id);
+		if (comment != null) {
+
+			return new ResponseEntity<>(comment, HttpStatus.OK);
+		} else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 	@PostMapping("/comment")
@@ -47,8 +52,8 @@ public class CommentController {
 
 	@PutMapping("comment/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void updateComment(@PathVariable Long commentId, @RequestParam("commentText") String commentText) {
-		Comment comment = commentService.findOne(commentId);
+	public void updateComment(@PathVariable Long id, @RequestParam("commentText") String commentText) {
+		Comment comment = commentService.findOne(id);
 		comment.setCommentText(commentText);
 		comment.setDate(new Date());
 		commentService.save(comment);

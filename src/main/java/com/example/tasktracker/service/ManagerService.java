@@ -1,9 +1,14 @@
 package com.example.tasktracker.service;
 
+import com.example.tasktracker.entities.Comment;
 import com.example.tasktracker.entities.Manager;
+import com.example.tasktracker.entities.Project;
+import com.example.tasktracker.entities.Task;
 import com.example.tasktracker.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
 
 @Component
 public class ManagerService {
@@ -52,5 +57,20 @@ public class ManagerService {
 
 	public void deleteAll() {
 		repo.deleteAll();
+	}
+
+	@Transactional
+	public Iterable<Project> getProjects(Long id) {
+		return repo.findOne(id).getCreatedProjects();
+	}
+
+	@Transactional
+	public Iterable<Task> getTasks(Long id) {
+		return repo.findOne(id).getCreatedTasks();
+	}
+
+	@Transactional
+	public Iterable<Comment> getComments(Long id) {
+		return repo.findOne(id).getComments();
 	}
 }

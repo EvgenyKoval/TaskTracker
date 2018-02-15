@@ -1,6 +1,8 @@
 package com.example.tasktracker.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Component
 @Data
@@ -17,9 +20,11 @@ import java.util.List;
 @Table(name = "manager")
 public class Manager extends User implements Serializable {
 	@OneToMany
-	transient private List<Project> createdProjects = new ArrayList<>();
+	@JsonIgnore
+	private List<Project> createdProjects = new ArrayList<>();
+
 	@OneToMany
-	transient private List<Task> createdTasks = new ArrayList<>();
+	@JsonIgnore private List<Task> createdTasks = new ArrayList<>();
 
 	public void addProject(Project project) {
 		createdProjects.add(project);

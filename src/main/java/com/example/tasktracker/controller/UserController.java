@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/users")
 public class UserController {
 
-	private UserService userService;
-	private CommentService commentService;
+	private final UserService userService;
+	private final CommentService commentService;
 
 
 	public UserController(UserService userService, CommentService commentService) {
