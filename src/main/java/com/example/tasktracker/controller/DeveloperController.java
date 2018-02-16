@@ -37,12 +37,16 @@ public class DeveloperController {
 
 	@PostMapping(value = "/developer")
 	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-		return new ResponseEntity<>(developerService.save(developer), HttpStatus.CREATED);
+		if (!developerService.exists(developer.getId())) {
+			return new ResponseEntity<>(developerService.save(developer), HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping("/developer/{id}")
 	public ResponseEntity<Developer> updateDeveloper(@PathVariable Long id, @RequestBody Developer developer) {
-		if (developerService.findOne(id) != null) {
+		if (developerService.exists(id)) {
 			return new ResponseEntity<>(developerService.save(developer), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -59,6 +63,7 @@ public class DeveloperController {
 	public ResponseEntity<Iterable<Task>> getDeveloperTasks(@PathVariable Long id) {
 		return new ResponseEntity<>(developerService.getTasks(id), HttpStatus.OK);
 	}
+
 	@GetMapping("/developer/{id}/projects")
 	public ResponseEntity<Iterable<Project>> getDeveloperProjects(@PathVariable Long id) {
 		return new ResponseEntity<>(developerService.getProjects(id), HttpStatus.OK);

@@ -20,7 +20,7 @@ public class Comment {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date = new Date();
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "author_id")
 	private User author;
 

@@ -25,7 +25,7 @@ public abstract class User implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
-	@OneToMany
+	@OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Comment> comments = new ArrayList<>();
 
