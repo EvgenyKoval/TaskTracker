@@ -1,6 +1,8 @@
 package com.example.tasktracker.controller;
 
+import com.example.tasktracker.DataGenerator;
 import com.example.tasktracker.entities.Comment;
+import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -36,6 +38,8 @@ public class CommentControllerTest {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
+	@Autowired
+	private DataGenerator dataGenerator;
 
 	@Autowired
 	void setConverters(HttpMessageConverter<?>[] converters) {
@@ -59,7 +63,7 @@ public class CommentControllerTest {
 
 	@Test
 	public void deleteOne() throws Exception {
-		mockMvc.perform(delete("/comments/comment/{id}", 11L))
+		mockMvc.perform(delete("/comments/comment/{id}", 10L))
 				.andExpect(status().isOk());
 	}
 
@@ -89,23 +93,22 @@ public class CommentControllerTest {
 				.andExpect(jsonPath("$.commentText", is("Test")));
 	}
 
-
-/*
 	@Test
-	public void add() throws Exception {
-		mockMvc.perform(post("/journal")
-				.content(this.toJsonString(new JournalEntry("Spring Boot Testing","Create Spring Boot Tests","05/09/2016")))
-				.contentType(contentType)).andExpect(status().isOk());
-	}
-*/
+	public void updateOne() throws Exception {
+		Comment comment = new Comment();
+		comment.setCommentText("Test");
+		comment.setDate(null);
+		String commentJson = new Gson().toJson(comment);
+		mockMvc.perform(put("/comments/comment/{id}", 1L)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(commentJson))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.commentText", is("Test")));
 
-/*
-	@SuppressWarnings("unchecked")
-	protected String toJsonString(Object obj) throws IOException {
-		MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
-		this.mappingJackson2HttpMessageConverter.write(obj, MediaType.APPLICATION_JSON,
-				mockHttpOutputMessage);
-		return mockHttpOutputMessage.getBodyAsString();
+		mockMvc.perform(put("/comments/comment/{id}", -1L)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(commentJson))
+				.andExpect(status().isNotFound());
 	}
-*/
+
 }

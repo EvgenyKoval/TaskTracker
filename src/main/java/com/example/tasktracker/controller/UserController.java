@@ -24,6 +24,7 @@ public class UserController {
 	@GetMapping
 	@ResponseBody
 	public Iterable<User> getAllUsers() {
+		System.err.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		return userService.findAll();
 	}
 

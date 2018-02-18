@@ -30,7 +30,7 @@ public class Project {
 	@ManyToMany(mappedBy = "projects")
 	@JsonIgnore
 	private List<Developer> developers = new ArrayList<>();
-	@OneToMany
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Task> tasks = new ArrayList<>();
 

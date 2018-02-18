@@ -25,7 +25,7 @@ public class Developer extends User {
 	@JsonIgnore
 	private List<Project> projects = new ArrayList<>();
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "developer",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Task> tasks = new ArrayList<>();
 

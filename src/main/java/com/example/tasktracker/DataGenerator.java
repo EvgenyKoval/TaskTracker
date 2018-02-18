@@ -75,6 +75,13 @@ public class DataGenerator {
 		System.out.println(projectService.findAll());
 	}
 
+	public void clearDB() {
+		commentService.deleteAll();
+		taskService.deleteAll();
+		developerService.deleteAll();
+		projectService.deleteAll();
+		managerService.deleteAll();
+	}
 	@Autowired
 	public void setContext(ConfigurableApplicationContext context) {
 		this.context = context;

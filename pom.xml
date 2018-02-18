@@ -25,6 +25,38 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.npm/react -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>react</artifactId>
+            <version>16.2.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.webjars.npm/react-dom -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>react-dom</artifactId>
+            <version>16.2.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.npm/axios -->
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>axios</artifactId>
+            <version>0.17.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/babel -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>babel</artifactId>
+            <version>4.7.16</version>
+        </dependency>
+
+
         <!--		<dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-mail</artifactId>

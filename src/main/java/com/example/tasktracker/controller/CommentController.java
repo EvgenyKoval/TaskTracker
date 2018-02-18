@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/comments")
 public class CommentController {
@@ -51,7 +53,10 @@ public class CommentController {
 	@PutMapping("comment/{id}")
 	public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment comment) {
 		if (commentService.exists(id)) {
-			return new ResponseEntity<>(commentService.save(comment), HttpStatus.OK);
+			Comment one = commentService.findOne(id);
+			one.setCommentText(comment.getCommentText());
+			one.setDate(new Date());
+			return new ResponseEntity<>(commentService.save(one), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

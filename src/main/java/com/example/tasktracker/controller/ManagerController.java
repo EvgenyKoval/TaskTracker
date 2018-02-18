@@ -1,10 +1,8 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.entities.Developer;
 import com.example.tasktracker.entities.Manager;
 import com.example.tasktracker.entities.Project;
 import com.example.tasktracker.entities.Task;
-import com.example.tasktracker.service.DeveloperService;
 import com.example.tasktracker.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -19,11 +19,11 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "manager")
 public class Manager extends User implements Serializable {
-	@OneToMany
+	@OneToMany(mappedBy = "manager",cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Project> createdProjects = new ArrayList<>();
 
-	@OneToMany
+	@OneToMany(mappedBy = "manager",cascade = CascadeType.ALL)
 	@JsonIgnore private List<Task> createdTasks = new ArrayList<>();
 
 	public void addProject(Project project) {
