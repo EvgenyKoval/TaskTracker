@@ -15,6 +15,7 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "task_id")
 	private Long taskId;
+	private String taskName;
 	@ManyToOne
 	@JoinColumn(name = "manager_id")
 	private Manager manager;

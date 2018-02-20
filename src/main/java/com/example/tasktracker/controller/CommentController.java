@@ -36,10 +36,9 @@ public class CommentController {
 	}
 
 	@PostMapping("/comment")
-	public ResponseEntity<Comment> addComment(@RequestParam("authorId") Long authorId, @RequestParam("commentText") String text) {
-		Comment comment = context.getBean(Comment.class);
+	public ResponseEntity<Comment> addComment(@RequestParam("authorId") Long authorId, @RequestBody Comment comment) {
 		comment.setAuthor(userService.findOne(authorId));
-		comment.setCommentText(text);
+		comment.setDate(new Date());
 		Comment save = commentService.save(comment);
 		return new ResponseEntity<>(save,HttpStatus.OK);
 	}

@@ -37,7 +37,7 @@ public class DeveloperController {
 
 	@PostMapping(value = "/developer")
 	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-		if (!developerService.exists(developer.getId())) {
+		if (developer.getId() == null || !developerService.exists(developer.getId())) {
 			return new ResponseEntity<>(developerService.save(developer), HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

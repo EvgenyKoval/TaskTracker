@@ -1,6 +1,5 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.DataGenerator;
 import com.example.tasktracker.entities.Comment;
 import com.google.gson.Gson;
 import org.junit.Before;
@@ -11,14 +10,10 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Arrays;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
@@ -33,21 +28,11 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CommentControllerTest {
-	private HttpMessageConverter mappingJackson2HttpMessageConverter;
+
 	private MockMvc mockMvc;
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
-	@Autowired
-	private DataGenerator dataGenerator;
-
-	@Autowired
-	void setConverters(HttpMessageConverter<?>[] converters) {
-		this.mappingJackson2HttpMessageConverter = Arrays.stream(converters).
-				filter(
-						converter -> converter instanceof MappingJackson2HttpMessageConverter).
-				findAny().get();
-	}
 
 	@Before
 	public void setup() throws Exception {
@@ -85,10 +70,11 @@ public class CommentControllerTest {
 	public void addOne() throws Exception {
 		Comment comment = new Comment();
 		comment.setCommentText("Test");
+		comment.setDate(null);
 		mockMvc.perform(post("/comments/comment")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("authorId", "1")
-				.param("commentText", "Test"))
+				.content(new Gson().toJson(comment)))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.commentText", is("Test")));
 	}
