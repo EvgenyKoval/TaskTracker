@@ -18,8 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.iterableWithSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -52,31 +51,66 @@ public class DeveloperControllerTest {
 				.andExpect(jsonPath("$.id", is(2)));
 	}
 
-/*
+	@Test
+	public void getMissingDeveloper() throws Exception {
+		mockMvc.perform(get("/developers/developer/{id}", -1L))
+				.andExpect(status().isNotFound());
+	}
+
 	@Test
 	public void addDeveloper() throws Exception {
 		mockMvc.perform(post("/developers/developer")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new Gson().toJson(new Developer())))
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 		.andExpect(jsonPath("$.id",is(21)));
 	}
-*/
+	@Test
+	public void addExistingDeveloper() throws Exception {
+		Developer developer = new Developer();
+		developer.setId(2L);
+		mockMvc.perform(post("/developers/developer")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(developer)))
+				.andExpect(status().isBadRequest());
+	}
 
 	@Test
 	public void updateDeveloper() throws Exception {
+		Developer dev = new Developer();
+		dev.setName("testName");
+		mockMvc.perform(put("/developers/developer/{id}", 2L)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(dev)))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.name", is("testName")));
+	}
+	@Test
+	public void updateMissingDeveloper() throws Exception {
+		mockMvc.perform(put("/developers/developer/{id}", -1L)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(new Gson().toJson(new Developer())))
+				.andExpect(status().isNotFound());
 	}
 
 	@Test
-	public void removeDeveloper() throws Exception {
+	public void deleteDeveloper() throws Exception {
+		mockMvc.perform(delete("/developers/developer/{id}",21L))
+				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void getDeveloperTasks() throws Exception {
+		mockMvc.perform(get("/developers/developer/{id}/tasks", 2L))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
 	@Test
 	public void getDeveloperProjects() throws Exception {
+		mockMvc.perform(get("/developers/developer/{id}/projects", 2L))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
 }

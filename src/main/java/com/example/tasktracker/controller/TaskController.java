@@ -45,7 +45,7 @@ public class TaskController {
 	}
 
 	@PostMapping("/task")
-	public ResponseEntity<Task> addTask(@RequestBody Task task,@RequestParam("managerId") Long managerId) {
+	public ResponseEntity<Task> addTask(@RequestBody Task task, @RequestParam("managerId") Long managerId) {
 		task.setManager(managerService.findOne(managerId));
 		Task save = taskService.save(task);
 		System.out.println(save);
