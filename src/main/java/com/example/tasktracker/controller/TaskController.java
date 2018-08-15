@@ -2,10 +2,9 @@ package com.example.tasktracker.controller;
 
 
 import com.example.tasktracker.entities.Task;
-import com.example.tasktracker.service.DeveloperService;
-import com.example.tasktracker.service.ManagerService;
 import com.example.tasktracker.service.ProjectService;
 import com.example.tasktracker.service.TaskService;
+import com.example.tasktracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -18,11 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class TaskController {
 	private TaskService taskService;
 	@Autowired
-	private ManagerService managerService;
-	@Autowired
 	private ProjectService projectService;
 	@Autowired
-	private DeveloperService developerService;
+	private UserService userService;
 	@Autowired
 	private ConfigurableApplicationContext context;
 
@@ -46,7 +43,7 @@ public class TaskController {
 
 	@PostMapping("")
 	public ResponseEntity<Task> addTask(@RequestBody Task task, @RequestParam("managerId") Long managerId) {
-		task.setManager(managerService.findOne(managerId));
+		task.setManager(userService.findOne(managerId));
 		Task save = taskService.save(task);
 		System.out.println(save);
 		return new ResponseEntity<>(save, HttpStatus.OK);

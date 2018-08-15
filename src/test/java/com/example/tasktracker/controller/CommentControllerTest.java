@@ -41,28 +41,28 @@ public class CommentControllerTest {
 
 	@Test
 	public void findAll() throws Exception {
-		mockMvc.perform(get("/comments"))
+		mockMvc.perform(get("/comments/"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", iterableWithSize(10)));
+				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
 	@Test
 	public void deleteOne() throws Exception {
-		mockMvc.perform(delete("/comments/comment/{id}", 10L))
+		mockMvc.perform(delete("/comments/{id}", 2L))
 				.andExpect(status().isOk());
 	}
 
 
 	@Test
 	public void findById() throws Exception {
-		mockMvc.perform(get("/comments/comment/{id}", 1L))
+		mockMvc.perform(get("/comments/{id}", 1L))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.commentId", is(1)));
 	}
 
 	@Test
 	public void findByIdFailed() throws Exception {
-		mockMvc.perform(get("/comments/comment/{id}", -1L))
+		mockMvc.perform(get("/comments/{id}", -1L))
 				.andExpect(status().isNotFound());
 	}
 
@@ -71,7 +71,7 @@ public class CommentControllerTest {
 		Comment comment = new Comment();
 		comment.setCommentText("Test");
 		comment.setDate(null);
-		mockMvc.perform(post("/comments/comment")
+		mockMvc.perform(post("/comments/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("authorId", "1")
 				.content(new Gson().toJson(comment)))
@@ -85,13 +85,13 @@ public class CommentControllerTest {
 		comment.setCommentText("Test");
 		comment.setDate(null);
 		String commentJson = new Gson().toJson(comment);
-		mockMvc.perform(put("/comments/comment/{id}", 1L)
+		mockMvc.perform(put("/comments/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(commentJson))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.commentText", is("Test")));
 
-		mockMvc.perform(put("/comments/comment/{id}", -1L)
+		mockMvc.perform(put("/comments/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(commentJson))
 				.andExpect(status().isNotFound());

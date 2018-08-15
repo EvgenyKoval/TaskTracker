@@ -1,9 +1,10 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.entities.Developer;
+import com.example.tasktracker.entities.User;
 import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -39,37 +40,37 @@ public class DeveloperControllerTest {
 
 	@Test
 	public void getDevelopers() throws Exception {
-		mockMvc.perform(get("/developers"))
+		mockMvc.perform(get("/developers/"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", iterableWithSize(10)));
+				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
 	@Test
 	public void getDeveloper() throws Exception {
-		mockMvc.perform(get("/developers/developer/{id}", 2L))
+		mockMvc.perform(get("/developers/{id}", 2L))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.id", is(2)));
 	}
 
 	@Test
 	public void getMissingDeveloper() throws Exception {
-		mockMvc.perform(get("/developers/developer/{id}", -1L))
+		mockMvc.perform(get("/developers/{id}", -1L))
 				.andExpect(status().isNotFound());
 	}
 
 	@Test
 	public void addDeveloper() throws Exception {
-		mockMvc.perform(post("/developers/developer")
+		mockMvc.perform(post("/developers/")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(new Developer())))
+				.content(new Gson().toJson(new User())))
 				.andExpect(status().isCreated())
-		.andExpect(jsonPath("$.id",is(21)));
+		.andExpect(jsonPath("$.id",is(3)));
 	}
 	@Test
 	public void addExistingDeveloper() throws Exception {
-		Developer developer = new Developer();
+		User developer = new User();
 		developer.setId(2L);
-		mockMvc.perform(post("/developers/developer")
+		mockMvc.perform(post("/developers/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new Gson().toJson(developer)))
 				.andExpect(status().isBadRequest());
@@ -77,9 +78,9 @@ public class DeveloperControllerTest {
 
 	@Test
 	public void updateDeveloper() throws Exception {
-		Developer dev = new Developer();
+		User dev = new User();
 		dev.setName("testName");
-		mockMvc.perform(put("/developers/developer/{id}", 2L)
+		mockMvc.perform(put("/developers/{id}", 2L)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(new Gson().toJson(dev)))
 				.andExpect(status().isOk())
@@ -87,28 +88,30 @@ public class DeveloperControllerTest {
 	}
 	@Test
 	public void updateMissingDeveloper() throws Exception {
-		mockMvc.perform(put("/developers/developer/{id}", -1L)
+		mockMvc.perform(put("/developers/{id}", -1L)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(new Gson().toJson(new Developer())))
+				.content(new Gson().toJson(new User())))
 				.andExpect(status().isNotFound());
 	}
 
 	@Test
 	public void deleteDeveloper() throws Exception {
-		mockMvc.perform(delete("/developers/developer/{id}",21L))
+		mockMvc.perform(delete("/developers/{id}",3L))
 				.andExpect(status().isOk());
 	}
 
+	@Ignore
 	@Test
 	public void getDeveloperTasks() throws Exception {
-		mockMvc.perform(get("/developers/developer/{id}/tasks", 2L))
+		mockMvc.perform(get("/developers/{id}/tasks", 2L))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
+	@Ignore
 	@Test
 	public void getDeveloperProjects() throws Exception {
-		mockMvc.perform(get("/developers/developer/{id}/projects", 2L))
+		mockMvc.perform(get("/developers/{id}/projects", 2L))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}

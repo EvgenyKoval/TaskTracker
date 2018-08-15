@@ -44,7 +44,7 @@ public class UserController {
 	/*@PostMapping(value = "")
 	@ResponseStatus(HttpStatus.OK)
 	public void addManager(@RequestParam("user") String manager) {
-		userService.save(new Gson().fromJson(manager, Manager.class));
+		userService.save(new Gson().fromJson(manager, User.class));
 	}*/
 
 	@GetMapping("/{id}/comments")

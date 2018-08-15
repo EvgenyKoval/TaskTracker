@@ -6,18 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Component
 public class DataGenerator {
 
     private ConfigurableApplicationContext context;
     @Autowired
     private UserService userService;
-    @Autowired
-    private DeveloperService developerService;
-    @Autowired
-    private ManagerService managerService;
     @Autowired
     private ProjectService projectService;
     @Autowired
@@ -36,8 +30,8 @@ public class DataGenerator {
         roleMan.setRoleName("ROLE_MANAGER");
         roleService.save(roleMan);
 //		for (int i = 0; i < 10; i++) {
-        Manager manager = managerService.save(context.getBean(Manager.class));
-        Developer dev = developerService.save(context.getBean(Developer.class));
+        User manager = userService.save(context.getBean(User.class));
+        User dev = userService.save(context.getBean(User.class));
 
         Task task = taskService.save(context.getBean(Task.class));
 
@@ -56,7 +50,6 @@ public class DataGenerator {
         dev.setPassword("123");
         dev.setEmail("");
         dev.setName("");
-        dev.setComments(new ArrayList<>());
 
         task.setManager(manager);
         task.setDeveloper(dev);
@@ -67,17 +60,21 @@ public class DataGenerator {
         project.setManager(manager);
         project.addDeveloper(dev);
         project.addTask(task);
-        manager.addTask(task);
-        manager.addProject(project);
-        manager.addComment(comment);
-        dev.addTask(task);
-        dev.addProject(project);
-
-        developerService.save(dev);
-        managerService.save(manager);
         commentService.save(comment);
         projectService.save(project);
         taskService.save(task);
+
+        userService.save(manager);
+        userService.save(dev);
+
+        System.out.println(manager);
+        System.out.println(dev);
+        System.out.println(comment);
+        System.out.println(project);
+        System.out.println(task);
+        System.out.println(roleMan);
+        System.out.println(roleDev);
+        System.out.println();
 //		}
 //        System.out.println(managerService.findAll());
         System.out.println(dev.getLogin() + " " + dev.getPassword());
@@ -88,11 +85,10 @@ public class DataGenerator {
     }
 
     public void clearDB() {
+        userService.findAll();
         commentService.deleteAll();
         taskService.deleteAll();
-        developerService.deleteAll();
         projectService.deleteAll();
-        managerService.deleteAll();
     }
 
     @Autowired

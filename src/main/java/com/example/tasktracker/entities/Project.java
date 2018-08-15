@@ -25,16 +25,16 @@ public class Project {
 
 	@ManyToOne
 	@JoinColumn(name = "manager")
-	private Manager manager;
+	private User manager;
 
-	@ManyToMany(mappedBy = "projects")
+	@ManyToMany
 	@JsonIgnore
-	private List<Developer> developers = new ArrayList<>();
+	private List<User> developers = new ArrayList<>();
 	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Task> tasks = new ArrayList<>();
 
-	public void addDeveloper(Developer dev) {
+	public void addDeveloper(User dev) {
 		developers.add(dev);
 	}
 

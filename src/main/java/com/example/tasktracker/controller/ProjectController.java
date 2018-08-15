@@ -2,10 +2,9 @@ package com.example.tasktracker.controller;
 
 import com.example.tasktracker.entities.Project;
 import com.example.tasktracker.entities.Task;
-import com.example.tasktracker.service.DeveloperService;
-import com.example.tasktracker.service.ManagerService;
 import com.example.tasktracker.service.ProjectService;
 import com.example.tasktracker.service.TaskService;
+import com.example.tasktracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
 	private ProjectService projectService;
 	private ConfigurableApplicationContext context;
-	private ManagerService managerService;
-	private DeveloperService developerService;
+	private UserService userService;
 	private TaskService taskService;
 
 	@GetMapping
@@ -32,7 +30,7 @@ public class ProjectController {
 	public void addProject(@RequestParam("projectname") String projectName, @RequestParam("managerId") Long managerId) {
 		Project project = context.getBean(Project.class);
 		project.setProjectName(projectName);
-		project.setManager(managerService.findOne(managerId));
+		project.setManager(userService.findOne(managerId));
 		projectService.save(project);
 	}
 
@@ -54,13 +52,8 @@ public class ProjectController {
 	}
 
 	@Autowired
-	public void setManagerService(ManagerService managerService) {
-		this.managerService = managerService;
-	}
-
-	@Autowired
-	public void setDeveloperService(DeveloperService developerService) {
-		this.developerService = developerService;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 	@Autowired

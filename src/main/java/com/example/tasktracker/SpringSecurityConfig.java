@@ -30,15 +30,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/comments/**").hasAnyRole("Dev")
-                .antMatchers(HttpMethod.GET,"comments/comment/**").hasAnyRole("Dev")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+//        http.csrf().disable()
+//                .authorizeRequests()
+//                .antMatchers("/comments/**").hasAnyRole("Dev")
+//                .antMatchers(HttpMethod.GET, "comments/comment/**").hasAnyRole("Dev")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//                .and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
     // создаем пользоватлелей, admin и user
@@ -46,6 +46,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("dev").password("dev").roles("Dev");
+                .withUser("dev").password("dev").roles("Dev")
+                .and()
+                .withUser("manager").password("manager").roles("Manager");
     }
 }

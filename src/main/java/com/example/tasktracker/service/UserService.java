@@ -5,6 +5,8 @@ import com.example.tasktracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserService {
 	@Autowired
@@ -25,4 +27,9 @@ public class UserService {
 	public void delete(Long aLong) {
 		repo.delete(aLong);
 	}
+
+	public boolean exists(Long id) {
+		return repo.exists(id);
+	}
+
 }

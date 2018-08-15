@@ -42,23 +42,23 @@ public class TaskControllerTest {
 	public void getTasks() throws Exception {
 		mockMvc.perform(get("/tasks"))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$", iterableWithSize(10)));
+				.andExpect(jsonPath("$", iterableWithSize(1)));
 	}
 
 	@Test
 	public void getTask() throws Exception {
-		mockMvc.perform(get("/tasks/task/{id}", 1L))
+		mockMvc.perform(get("/tasks/{id}", 1L))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.taskId", is(1)));
 	}
 
 	@Test
 	public void addTask() throws Exception {
-		mockMvc.perform(post("/tasks/task")
+		mockMvc.perform(post("/tasks/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("managerId", "1")
 				.content(new Gson().toJson(new Task())))
-				.andExpect(jsonPath("$.taskId", is(11)));
+				.andExpect(jsonPath("$.taskId", is(2)));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ public class TaskControllerTest {
 		Task task = new Task();
 		task.setTaskId(1L);
 		task.setTaskName("testName");
-		mockMvc.perform(put("/tasks/task/{id}",1L)
+		mockMvc.perform(put("/tasks/{id}",1L)
 		.contentType(MediaType.APPLICATION_JSON)
 				.content(new Gson().toJson(task)))
 				.andExpect(status().isOk())
@@ -77,7 +77,7 @@ public class TaskControllerTest {
 
 	@Test
 	public void deleteTask() throws Exception {
-		mockMvc.perform(delete("/tasks/task/{id}", 11L))
+		mockMvc.perform(delete("/tasks/{id}", 2L))
 				.andExpect(status().isOk());
 	}
 

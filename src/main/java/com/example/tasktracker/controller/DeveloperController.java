@@ -1,9 +1,9 @@
 package com.example.tasktracker.controller;
 
-import com.example.tasktracker.entities.Developer;
 import com.example.tasktracker.entities.Project;
 import com.example.tasktracker.entities.Task;
-import com.example.tasktracker.service.DeveloperService;
+import com.example.tasktracker.entities.User;
+import com.example.tasktracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,61 +13,61 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/developers")
 public class DeveloperController {
-	private DeveloperService developerService;
+	private UserService userService;
 
 	@Autowired
-	public DeveloperController(DeveloperService developerService) {
-		this.developerService = developerService;
+	public DeveloperController(UserService userService) {
+		this.userService = userService;
 	}
 
 	@GetMapping
-	public ResponseEntity<Iterable<Developer>> getDevelopers() {
-		return new ResponseEntity<>(developerService.findAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<User>> getDevelopers() {
+		return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Developer> getDeveloper(@PathVariable Long id) {
-		Developer developer = developerService.findOne(id);
-		if (developer != null) {
-			return new ResponseEntity<>(developer, HttpStatus.OK);
+	public ResponseEntity<User> getUser(@PathVariable Long id) {
+		User user = userService.findOne(id);
+		if (user != null) {
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@PostMapping(value = "/")
-	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
-		if (developer.getId() == null || !developerService.exists(developer.getId())) {
-			return new ResponseEntity<>(developerService.save(developer), HttpStatus.CREATED);
+	public ResponseEntity<User> addUser(@RequestBody User user) {
+		if (user.getId() == null || !userService.exists(user.getId())) {
+			return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Developer> updateDeveloper(@PathVariable Long id, @RequestBody Developer developer) {
-		if (developerService.exists(id)) {
-			return new ResponseEntity<>(developerService.save(developer), HttpStatus.OK);
+	public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+		if (userService.exists(id)) {
+			return new ResponseEntity<>(userService.save(user), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> removeDeveloper(@PathVariable Long id) {
-		developerService.delete(id);
+	public ResponseEntity<Void> removeUser(@PathVariable Long id) {
+		userService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}/tasks")
-	public ResponseEntity<Iterable<Task>> getDeveloperTasks(@PathVariable Long id) {
-		return new ResponseEntity<>(developerService.getTasks(id), HttpStatus.OK);
-	}
-
-	@GetMapping("/{id}/projects")
-	public ResponseEntity<Iterable<Project>> getDeveloperProjects(@PathVariable Long id) {
-		return new ResponseEntity<>(developerService.getProjects(id), HttpStatus.OK);
-	}
+//	@GetMapping("/{id}/tasks")
+//	public ResponseEntity<Iterable<Task>> getUserTasks(@PathVariable Long id) {
+//		return new ResponseEntity<>(userService.getTasks(id), HttpStatus.OK);
+//	}
+//
+//	@GetMapping("/{id}/projects")
+//	public ResponseEntity<Iterable<Project>> getUserProjects(@PathVariable Long id) {
+//		return new ResponseEntity<>(userService.getProjects(id), HttpStatus.OK);
+//	}
 
 
 }

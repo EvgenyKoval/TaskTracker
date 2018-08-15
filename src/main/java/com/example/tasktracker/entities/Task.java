@@ -18,11 +18,11 @@ public class Task {
 	private String taskName;
 	@ManyToOne
 	@JoinColumn(name = "manager_id")
-	private Manager manager;
+	private User manager;
 
 	@ManyToOne
 	@JoinColumn(name = "developer_id")
-	private Developer developer;
+	private User developer;
 
 	@ManyToOne
 	@JoinColumn(name = "project_id")
