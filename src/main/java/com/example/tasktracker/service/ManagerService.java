@@ -7,8 +7,8 @@ import com.example.tasktracker.entities.Task;
 import com.example.tasktracker.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 @Component
 public class ManagerService {

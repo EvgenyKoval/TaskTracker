@@ -37,13 +37,4 @@ public class Developer extends User {
 		projects.add(project);
 	}
 
-	@Override
-	public String toString() {
-		return "Developer{" +
-				"id=" + getId() +
-				", name='" + getName() + '\'' +
-				", email='" + getEmail() + '\'' +
-				", role=" + getRole() +
-				"}";
-	}
 }

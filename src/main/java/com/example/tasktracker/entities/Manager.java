@@ -33,15 +33,4 @@ public class Manager extends User implements Serializable {
 	public void addTask(Task task) {
 		createdTasks.add(task);
 	}
-
-	@Override
-	public String toString() {
-		return "{" +
-				"id:" + getId() +
-				", name:'" + getName() + '\'' +
-				", email:'" + getEmail() + '\'' +
-				", role:" + getRole() +
-				"}";
-
-	}
 }

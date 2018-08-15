@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/html">
 <head>
-	<!--<meta charset="UTF-8" http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8"/>-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/cjs/react.development.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/cjs/react-dom-server.browser.development.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.19/browser.js"></script>
-	<title>Hello demo</title>
+    <title>Hello demo</title>
 </head>
 <body>
-<div id="react">jkh</div>
-<script type="text/babel" src="index.js"></script>
+<div>
+    <span th:text="helllo"></span>
+    <form th:action="@{/login}" method="post" id="user">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Sign In"/></div>
+        <div>
+            <select>
+                <option th:each="role : ${roles}" th:value="${role.roleId}" th:text="${role.roleName}"></option>
+            </select>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

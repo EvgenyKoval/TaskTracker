@@ -27,7 +27,7 @@ public class ProjectController {
 		return projectService.findAll();
 	}
 
-	@PostMapping("/project")
+	@PostMapping("/")
 	@ResponseStatus(HttpStatus.OK)
 	public void addProject(@RequestParam("projectname") String projectName, @RequestParam("managerId") Long managerId) {
 		Project project = context.getBean(Project.class);
@@ -36,7 +36,7 @@ public class ProjectController {
 		projectService.save(project);
 	}
 
-	@GetMapping("/project/{projectId}/tasks")
+	@GetMapping("/{projectId}/tasks")
 	@ResponseBody
 	public Iterable<Task> getProjectTasks(@PathVariable Long projectId) {
 		return taskService.getProjectTasks(projectId);

@@ -20,6 +20,8 @@ public abstract class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "user_id")
 	private Long id;
+	private String login;
+	private String password;
 	private String name;
 	private String email;
 	@OneToOne
@@ -32,16 +34,6 @@ public abstract class User implements Serializable {
 
 	public void addComment(Comment comment) {
 		comments.add(comment);
-	}
-
-	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", email='" + email + '\'' +
-				", role=" + role +
-				'}';
 	}
 }
 

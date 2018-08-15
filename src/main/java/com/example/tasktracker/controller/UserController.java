@@ -28,26 +28,26 @@ public class UserController {
 		return userService.findAll();
 	}
 
-	@GetMapping(value = "/user/{id}")
+	@GetMapping(value = "/{id}")
 	@ResponseBody
 	public User getManager(@PathVariable Long id) {
 		return userService.findOne(id);
 	}
 
-	@DeleteMapping(value = "/user/{id}")
+	@DeleteMapping(value = "/{id}")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteManager(@PathVariable Long id) {
 		userService.delete(id);
 	}
 
-	/*@PostMapping(value = "/user")
+	/*@PostMapping(value = "")
 	@ResponseStatus(HttpStatus.OK)
 	public void addManager(@RequestParam("user") String manager) {
 		userService.save(new Gson().fromJson(manager, Manager.class));
 	}*/
 
-	@GetMapping("/user/{id}/comments")
+	@GetMapping("/{id}/comments")
 	@ResponseBody
 	public Iterable<Comment> getUserComments(@PathVariable Long id) {
 		return commentService.getUserComments(id);

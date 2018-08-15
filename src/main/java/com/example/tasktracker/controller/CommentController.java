@@ -25,7 +25,7 @@ public class CommentController {
 		this.userService = userService;
 	}
 
-	@GetMapping(value = "/comment/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Comment> getComment(@PathVariable Long id) {
 		Comment comment = commentService.findOne(id);
 		if (comment != null) {
@@ -35,7 +35,7 @@ public class CommentController {
 		}
 	}
 
-	@PostMapping("/comment")
+	@PostMapping("/")
 	public ResponseEntity<Comment> addComment(@RequestParam("authorId") Long authorId, @RequestBody Comment comment) {
 		comment.setAuthor(userService.findOne(authorId));
 		comment.setDate(new Date());
@@ -43,13 +43,13 @@ public class CommentController {
 		return new ResponseEntity<>(save,HttpStatus.OK);
 	}
 
-	@DeleteMapping("/comment/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
 		commentService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PutMapping("comment/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Comment> updateComment(@PathVariable Long id, @RequestBody Comment comment) {
 		if (commentService.exists(id)) {
 			Comment one = commentService.findOne(id);

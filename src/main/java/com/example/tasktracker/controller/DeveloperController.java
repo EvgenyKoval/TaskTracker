@@ -25,7 +25,7 @@ public class DeveloperController {
 		return new ResponseEntity<>(developerService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/developer/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Developer> getDeveloper(@PathVariable Long id) {
 		Developer developer = developerService.findOne(id);
 		if (developer != null) {
@@ -35,7 +35,7 @@ public class DeveloperController {
 		}
 	}
 
-	@PostMapping(value = "/developer")
+	@PostMapping(value = "/")
 	public ResponseEntity<Developer> addDeveloper(@RequestBody Developer developer) {
 		if (developer.getId() == null || !developerService.exists(developer.getId())) {
 			return new ResponseEntity<>(developerService.save(developer), HttpStatus.CREATED);
@@ -44,7 +44,7 @@ public class DeveloperController {
 		}
 	}
 
-	@PutMapping("/developer/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Developer> updateDeveloper(@PathVariable Long id, @RequestBody Developer developer) {
 		if (developerService.exists(id)) {
 			return new ResponseEntity<>(developerService.save(developer), HttpStatus.OK);
@@ -53,18 +53,18 @@ public class DeveloperController {
 		}
 	}
 
-	@DeleteMapping("/developer/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> removeDeveloper(@PathVariable Long id) {
 		developerService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/developer/{id}/tasks")
+	@GetMapping("/{id}/tasks")
 	public ResponseEntity<Iterable<Task>> getDeveloperTasks(@PathVariable Long id) {
 		return new ResponseEntity<>(developerService.getTasks(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/developer/{id}/projects")
+	@GetMapping("/{id}/projects")
 	public ResponseEntity<Iterable<Project>> getDeveloperProjects(@PathVariable Long id) {
 		return new ResponseEntity<>(developerService.getProjects(id), HttpStatus.OK);
 	}

@@ -25,7 +25,7 @@ public class ManagerController {
 		return new ResponseEntity<>(managerService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/manager/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Manager> getManager(@PathVariable Long id) {
 		Manager manager = managerService.findOne(id);
 		if (manager != null) {
@@ -35,7 +35,7 @@ public class ManagerController {
 		}
 	}
 
-	@PostMapping(value = "/manager")
+	@PostMapping(value = "/")
 	public ResponseEntity<Manager> addManager(@RequestBody Manager manager) {
 		if (!managerService.exists(manager.getId())) {
 			return new ResponseEntity<>(managerService.save(manager), HttpStatus.CREATED);
@@ -44,7 +44,7 @@ public class ManagerController {
 		}
 	}
 
-	@PutMapping("/manager/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Manager> updateManager(@PathVariable Long id, @RequestBody Manager manager) {
 		if (managerService.exists(id)) {
 			return new ResponseEntity<>(managerService.save(manager), HttpStatus.OK);
@@ -53,18 +53,18 @@ public class ManagerController {
 		}
 	}
 
-	@DeleteMapping("/manager/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> removeManager(@PathVariable Long id) {
 		managerService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/manager/{id}/tasks")
+	@GetMapping("/{id}/tasks")
 	public ResponseEntity<Iterable<Task>> getManagerTasks(@PathVariable Long id) {
 		return new ResponseEntity<>(managerService.getTasks(id), HttpStatus.OK);
 	}
 
-	@GetMapping("/manager/{id}/projects")
+	@GetMapping("/{id}/projects")
 	public ResponseEntity<Iterable<Project>> getManagerProjects(@PathVariable Long id) {
 		return new ResponseEntity<>(managerService.getProjects(id), HttpStatus.OK);
 	}

@@ -16,12 +16,4 @@ public class Role {
 //	@Column(name = "role_id")
 	private Long roleId;
 	private String roleName;
-
-	@Override
-	public String toString() {
-		return "{" +
-				"roleId:" + roleId +
-				", roleName:'" + roleName + '\'' +
-				'}';
-	}
 }

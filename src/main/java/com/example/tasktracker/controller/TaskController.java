@@ -35,7 +35,7 @@ public class TaskController {
 		return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
 	}
 
-	@GetMapping("/task/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Task> getTask(@PathVariable Long id) {
 		if (taskService.exists(id)) {
 			return new ResponseEntity<>(taskService.findOne(id), HttpStatus.OK);
@@ -44,7 +44,7 @@ public class TaskController {
 		}
 	}
 
-	@PostMapping("/task")
+	@PostMapping("")
 	public ResponseEntity<Task> addTask(@RequestBody Task task, @RequestParam("managerId") Long managerId) {
 		task.setManager(managerService.findOne(managerId));
 		Task save = taskService.save(task);
@@ -52,7 +52,7 @@ public class TaskController {
 		return new ResponseEntity<>(save, HttpStatus.OK);
 	}
 
-	@PutMapping("/task/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
 		if (taskService.exists(id)) {
 			Task one = taskService.findOne(id);
@@ -63,7 +63,7 @@ public class TaskController {
 		}
 	}
 
-	@DeleteMapping("/task/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
 		taskService.delete(id);
 		return new ResponseEntity<>(HttpStatus.OK);
