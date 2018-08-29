@@ -23,21 +23,21 @@ public class DataGenerator {
 
 
     public void generateData() {
-        Role roleMan = roleService.save(context.getBean(Role.class));
-        Role roleDev = roleService.save(context.getBean(Role.class));
+        Role roleMan = roleService.save(new Role());
+        Role roleDev = roleService.save(new Role());
         roleDev.setRoleName("ROLE_DEV");
         roleService.save(roleDev);
         roleMan.setRoleName("ROLE_MANAGER");
         roleService.save(roleMan);
 //		for (int i = 0; i < 10; i++) {
-        User manager = userService.save(context.getBean(User.class));
-        User dev = userService.save(context.getBean(User.class));
+        User manager = userService.save(new User());
+        User dev = userService.save(new User());
 
-        Task task = taskService.save(context.getBean(Task.class));
+        Task task = taskService.save(new Task());
 
-        Comment comment = commentService.save(context.getBean(Comment.class));
+        Comment comment = commentService.save(new Comment());
 
-        Project project = projectService.save(context.getBean(Project.class));
+        Project project = projectService.save(new Project());
 
         manager.setRole(roleMan);
         manager.setEmail("");
@@ -58,8 +58,6 @@ public class DataGenerator {
         comment.setAuthor(manager);
 
         project.setManager(manager);
-        project.addDeveloper(dev);
-        project.addTask(task);
         commentService.save(comment);
         projectService.save(project);
         taskService.save(task);
@@ -67,13 +65,14 @@ public class DataGenerator {
         userService.save(manager);
         userService.save(dev);
 
-        System.out.println(manager);
-        System.out.println(dev);
-        System.out.println(comment);
-        System.out.println(project);
-        System.out.println(task);
-        System.out.println(roleMan);
-        System.out.println(roleDev);
+//        System.out.println(manager);
+//        System.out.println(dev);
+//        System.out.println(comment);
+//        System.out.println(project);
+//        System.out.println(task);
+//        System.out.println(roleMan);
+//        System.out.println(roleDev);
+//        System.out.println(projectService.findProjectWithTasks(1L));
         System.out.println();
 //		}
 //        System.out.println(managerService.findAll());

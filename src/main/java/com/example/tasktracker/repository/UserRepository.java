@@ -1,7 +1,8 @@
 package com.example.tasktracker.repository;
 
 import com.example.tasktracker.entities.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User,Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 }

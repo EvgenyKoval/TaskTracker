@@ -38,7 +38,6 @@ public class CommentController {
 	@PostMapping("/")
 	public ResponseEntity<Comment> addComment(@RequestParam("authorId") Long authorId, @RequestBody Comment comment) {
 		comment.setAuthor(userService.findOne(authorId));
-		comment.setDate(new Date());
 		Comment save = commentService.save(comment);
 		return new ResponseEntity<>(save,HttpStatus.OK);
 	}
@@ -54,7 +53,6 @@ public class CommentController {
 		if (commentService.exists(id)) {
 			Comment one = commentService.findOne(id);
 			one.setCommentText(comment.getCommentText());
-			one.setDate(new Date());
 			return new ResponseEntity<>(commentService.save(one), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

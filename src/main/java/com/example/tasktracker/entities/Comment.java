@@ -8,17 +8,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Component
-@Scope("prototype")
 @Data
+@Table(name = "comment")
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "comment_id")
-	private Long commentId;
-
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date = new Date();
+	@Column(name = "id")
+	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "author_id")

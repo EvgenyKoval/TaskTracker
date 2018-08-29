@@ -70,7 +70,6 @@ public class CommentControllerTest {
 	public void addOne() throws Exception {
 		Comment comment = new Comment();
 		comment.setCommentText("Test");
-		comment.setDate(null);
 		mockMvc.perform(post("/comments/")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("authorId", "1")
@@ -83,7 +82,6 @@ public class CommentControllerTest {
 	public void updateOne() throws Exception {
 		Comment comment = new Comment();
 		comment.setCommentText("Test");
-		comment.setDate(null);
 		String commentJson = new Gson().toJson(comment);
 		mockMvc.perform(put("/comments/{id}", 1L)
 				.contentType(MediaType.APPLICATION_JSON)

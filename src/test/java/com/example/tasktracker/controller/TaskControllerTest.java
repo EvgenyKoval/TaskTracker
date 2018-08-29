@@ -64,7 +64,6 @@ public class TaskControllerTest {
 	@Test
 	public void updateTask() throws Exception {
 		Task task = new Task();
-		task.setTaskId(1L);
 		task.setTaskName("testName");
 		mockMvc.perform(put("/tasks/{id}",1L)
 		.contentType(MediaType.APPLICATION_JSON)

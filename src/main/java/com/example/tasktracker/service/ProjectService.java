@@ -4,8 +4,9 @@ import com.example.tasktracker.entities.Project;
 import com.example.tasktracker.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ProjectService {
 	@Autowired
 	private ProjectRepository repo;
@@ -52,6 +53,11 @@ public class ProjectService {
 
 	public void deleteAll() {
 		repo.deleteAll();
+	}
+
+	public Project findProjectWithTasks(Long id) {
+		return null;
+//		return repo.getProjectWithTasks();
 	}
 
 }

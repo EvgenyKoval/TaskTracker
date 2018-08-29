@@ -11,43 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Component
-@Scope("prototype")
 @Data
+@Table(name = "project")
 public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "project_id")
-	private Long projectId;
+	@Column(name = "id")
+	private Long id;
 
+	@Column(name = "project_name")
 	private String projectName;
 
 	@ManyToOne
-	@JoinColumn(name = "manager")
+	@JoinColumn(name = "manager_id")
 	private User manager;
 
-	@ManyToMany
-	@JsonIgnore
-	private List<User> developers = new ArrayList<>();
-	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Task> tasks = new ArrayList<>();
-
-	public void addDeveloper(User dev) {
-		developers.add(dev);
-	}
-
-	public void addTask(Task task) {
-		tasks.add(task);
-	}
-
-	@Override
-	public String toString() {
-		return "Project{" +
-				"projectId=" + projectId +
-				", projectName='" + projectName + '\'' +
-				", manager=" + manager +
-				'}';
-	}
 }

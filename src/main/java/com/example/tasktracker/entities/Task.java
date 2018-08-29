@@ -7,15 +7,17 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 @Entity
-@Component
-@Scope("prototype")
 @Data
+@Table(name = "task")
 public class Task {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "task_id")
-	private Long taskId;
+	@Column(name = "id")
+	private Long id;
+
+	@Column(name = "task_name")
 	private String taskName;
+
 	@ManyToOne
 	@JoinColumn(name = "manager_id")
 	private User manager;

@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 
 @Entity
-@Component
-@Scope("prototype")
 @Data
+@Table(name = "role")
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long roleId;
+	@Column(name = "id")
+	private Long id;
+	@Column(name = "role_name")
 	private String roleName;
 }

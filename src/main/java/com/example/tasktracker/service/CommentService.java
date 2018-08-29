@@ -4,8 +4,9 @@ import com.example.tasktracker.entities.Comment;
 import com.example.tasktracker.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class CommentService {
 	@Autowired
 	private CommentRepository repo;

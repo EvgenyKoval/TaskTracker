@@ -37,7 +37,7 @@ public class ProjectController {
 	@GetMapping("/{projectId}/tasks")
 	@ResponseBody
 	public Iterable<Task> getProjectTasks(@PathVariable Long projectId) {
-		return taskService.getProjectTasks(projectId);
+		return null;//taskService.getProjectTasks(projectId);
 	}
 
 
